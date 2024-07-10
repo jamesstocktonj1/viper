@@ -1448,6 +1448,17 @@ func (v *Viper) SetDefault(key string, value any) {
 	deepestMap[lastKey] = value
 }
 
+// SetDefaults sets the default value from a map of key/value pairs.
+// SetDefaults is case-insensitive for a key.
+// Default only used when no value is provided by the user via flag, config or ENV.
+func SetDefaults(defaults map[string]any) { v.SetDefaults(defaults) }
+
+func (v *Viper) SetDefaults(defaults map[string]any) {
+	for key, value := range defaults {
+		v.SetDefault(key, value)
+	}
+}
+
 // Set sets the value for the key in the override register.
 // Set is case-insensitive for a key.
 // Will be used instead of values obtained via

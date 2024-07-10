@@ -481,6 +481,24 @@ func TestDefault(t *testing.T) {
 	assert.Equal(t, "leather", v.Get("clothing.jacket"))
 }
 
+func TestDefaults(t *testing.T) {
+	v := New()
+
+	defaults := map[string]any{
+		"age":             45,
+		"clothing.jacket": "slacks",
+		"beard":           false,
+	}
+	v.SetDefaults(defaults)
+
+	v.SetConfigType("yaml")
+	err := v.ReadConfig(bytes.NewBuffer(yamlExample))
+
+	assert.NoError(t, err)
+	assert.Equal(t, "leather", v.Get("clothing.jacket"))
+	assert.Equal(t, true, v.Get("beard"))
+}
+
 func TestUnmarshaling(t *testing.T) {
 	v := New()
 	v.SetConfigType("yaml")
